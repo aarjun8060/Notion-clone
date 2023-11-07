@@ -17,13 +17,13 @@ export const metadata: Metadata = {
     icon:[
     {
       media:"(prefers-color-schema :light)",
-      url:"/logo.svg",
-      href:"/logo.svg"
+      url:"/jotion-logo.svg",
+      href:"/jotion-logo.svg"
     },
     {
       media:"(prefers-color-schema :dark)",
-      url:"/logo.svg",
-      href:"/logo.svg"
+      url:"/jotion-logo-dark.svg",
+      href:"/jotion-logo-dark.svg"
     }
   ]
 }
