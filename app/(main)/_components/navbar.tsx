@@ -9,6 +9,8 @@ import Title from "./title";
 import Banner from "./banner";
 import Menu from "./menu";
 import Publish from "./publish";
+import Member from "./member";
+import { useUser } from "@clerk/clerk-react";
 
 interface NavbarProps {
     isCollapsed : boolean;
@@ -47,9 +49,10 @@ const Navbar = ({
                         className="h-6 w-6 text-muted-foreground"
                     />
                 )}
-                <div className="flex items-center justify-between w-full ">
+                <div className="flex items-center justify-between w-full">
                     <Title initialData={document}/>
                     <div className="flex items-center gap-x-2">
+                        <Member/>
                         <Publish
                             initialData={document}
                         />
@@ -57,7 +60,9 @@ const Navbar = ({
                             documentId = {document._id}
                         />
                     </div>
+
                 </div>
+                
             </nav>
             {
                 document.isArchived &&  (

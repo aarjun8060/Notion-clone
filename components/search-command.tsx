@@ -7,7 +7,14 @@ import { useQuery } from "convex/react"
 import { File } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "./ui/command"
+import { 
+    CommandDialog,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList
+} from "./ui/command"
 
 
 export const SearchCommand = () => {
@@ -25,12 +32,13 @@ export const SearchCommand = () => {
     },[]);
 
     useEffect(()=>{
-        const down = (e:KeyboardEvent) => {
+        const down = async (e:KeyboardEvent) => {
             if(e.key === 'k' && (e.metaKey || e.ctrlKey)){
                 e.preventDefault()
-                toggle()
+                toggle();
             }
-        } 
+            
+        }
 
         document.addEventListener("keydown",down)
         return () => document.removeEventListener("keydown",down)

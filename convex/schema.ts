@@ -2,6 +2,13 @@ import { defineSchema , defineTable} from "convex/server"
 import { v } from "convex/values"
 
 export default defineSchema({
+    collaborator:defineTable({
+        collab:v.optional(v.id("collaborator")),
+        collaboratorId: v.string(),
+        collaboratorUserId:v.string(),
+        isDeleted:v.boolean(),
+        docsId:v.id("documents"),
+      }),
     documents : defineTable({
         title : v.string(),
         userId : v.string(),

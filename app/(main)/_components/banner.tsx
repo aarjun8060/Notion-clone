@@ -53,7 +53,7 @@ const Banner = ({
             onClick={onRestore}
             className="border-white bg-transparent hover:bg-primary/5 text-white hover:text-white p-1 px-2 h-auto font-normal"
             >
-                    Restore Page
+            Restore Page
             </Button>
             <ConfirmModal onConfirm={onRemove}>
                 <Button

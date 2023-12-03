@@ -21,6 +21,7 @@ import TrashBox from "./trash-box";
 import { useSearch } from "@/hooks/use-search";
 import { useSettings } from "@/hooks/use-settings";
 import Navbar from "./navbar";
+import { useAuth, useUser } from "@clerk/clerk-react";
 
 const Navigation = () => {
     const router = useRouter()
@@ -29,8 +30,14 @@ const Navigation = () => {
     const params = useParams()
     const pathname = usePathname()
     const isMobile = useMediaQuery("(max-width:768px)")
+    const {user} = useUser()
+    const userId = user && user?.id ? user.id : ""
     // const documents = useQuery(api.documents.get);
     const create = useMutation(api.documents.create)
+    // Collabortor
+    const getCollabortor = useQuery(api.documents.getColloborator,{
+        id:userId
+    })
     // REF----------
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ElementRef<"aside">>(null)
@@ -120,6 +127,8 @@ const Navigation = () => {
             error:"failed to create a new note."
         })
     }
+
+
     return (
         <>
             <aside
@@ -158,7 +167,25 @@ const Navigation = () => {
                         icon={PlusCircle}
                     />
                 </div>
+                <div>
+                    <div className="text-muted-foreground font-medium px-3">Group</div>
+                    {
+                        getCollabortor?.length ? (
+                            getCollabortor.map((member)=>(
+                                <DocumentList
+                                parentDocumentId={member.docsId}
+                                memberId={member && member?.collaboratorUserId}
+                                memberDocsId= {member && member?.docsId}
+                                key={member._id}
+                                />
+                            )) 
+                        ) : (
+                            <div className="text-muted-foreground font-semibold text-sm">No Member in any other Page</div>
+                        )   
+                    }    
+                </div>
                 <div className="mt-4 w-full">
+
                     <DocumentList/>
                     <Item
                         onClick={handleCreate}

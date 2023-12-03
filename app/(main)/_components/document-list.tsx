@@ -12,17 +12,21 @@ import { FileIcon } from "lucide-react";
 interface DocumentListProps {
     parentDocumentId?: Id<"documents">;
     level?:number;
-    data?:Doc<"documents">[]
+    data?:Doc<"documents">[];
+    memberId?:string;
+    memberDocsId?:Id<"documents">;
 }
 const DocumentList = ({
     parentDocumentId,
     level=0,
-    data
+    data,
+    memberId,
+    memberDocsId
 }:DocumentListProps) => {
     const params = useParams();
     const router= useRouter();
     const [expanded,setExpanded]= useState<Record<string,boolean>>({})
-
+    console.log(memberId)
     const  onExpand = (documentId:string)=>{
         setExpanded(prevExpanded => ({
             ...prevExpanded,
@@ -30,10 +34,12 @@ const DocumentList = ({
         }))
     }
 
-    const documents = useQuery(api.documents.getSidebar,{
-        parentDocument:parentDocumentId
-    })
 
+    const documents = useQuery(api.documents.getSidebar,{
+            parentDocument:parentDocumentId,userId:memberId,docsId:memberDocsId
+        }) || []
+ 
+    console.log("Document",documents)
     const onRedirect = (documentId:string) => {
         router.push(`/documents/${documentId}`);
     }
