@@ -22,20 +22,18 @@ import { api } from "@/convex/_generated/api";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
 import { Id } from "@/convex/_generated/dataModel";
- 
 interface UserProps {
   id:string;
   username:string;
   email:string;
-  image:string
+  image:string;
 }
-
 const Member = () => {
   const {getToken} = useAuth();
   const {user} = useUser()
   const params = useParams()
   const [open,setOpen] = useState(false)
-  const [users,setUsers] = useState([]);
+  const [users,setUsers] = useState<UserProps[] | any>([]);
   const [collab,setCollab] = useState<any>([])
   const [collabMember,setCollabMember] = useState([])
   const userId:string = user?.id ? user.id : "";
@@ -78,14 +76,14 @@ const Member = () => {
       toast.error('Error creating collaborator. Please try again.');
     }
   };
-   
+  console.log(users)
   useEffect(()=>{
     fetchData()
     if(getCollabUsers){
       const collabUserIds = getCollabUsers.map(user => user.collaboratorUserId);
       const collabUserMemberIds = getCollabUsers.map(user => user.collaboratorId);
-      const collabMember = users.filter(user => collabUserMemberIds.includes(user?.id));
-      const collabUsers = users.filter(user => collabUserIds.includes(user?.id));
+      const collabMember = users.filter((user:any) => collabUserMemberIds.includes(user?.id));
+      const collabUsers = users.filter((user:any) => collabUserIds.includes(user?.id));
       setCollabMember(collabMember)
       setCollab(collabUsers[0]);
     }
