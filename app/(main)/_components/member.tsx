@@ -79,6 +79,9 @@ const Member = () => {
   console.log(users)
   useEffect(()=>{
     fetchData()
+  },[])
+  useEffect(()=>{
+    
     if(getCollabUsers){
       const collabUserIds = getCollabUsers.map(user => user.collaboratorUserId);
       const collabUserMemberIds = getCollabUsers.map(user => user.collaboratorId);
@@ -112,21 +115,18 @@ const Member = () => {
       <DialogTrigger asChild onClick={fetchData}>
         {
           !!collab ? (
-            <>
-            <Avatar 
-              onClick={() => setOpen(true)} 
-              className="cursor-pointer"
-            >
-              <AvatarImage src={collab.image}/>
-              <AvatarFallback>AR</AvatarFallback>
-            </Avatar> 
-            </>
+            <Button>
+              <Avatar 
+                className="cursor-pointer"
+              >
+                <AvatarImage src={collab.image}/>
+                <AvatarFallback>AR</AvatarFallback>
+              </Avatar> 
+            </Button>
         ): (
             <Button 
             size="sm" 
-            variant="ghost" 
-            className="bg-red-600" 
-          
+            variant="ghost"
             >
               Make Collaborator
             </Button>

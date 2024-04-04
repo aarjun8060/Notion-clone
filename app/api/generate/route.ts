@@ -13,6 +13,7 @@ export const runtime = "edge";
 
 export async function POST(req: Request): Promise<Response> {
   // Check if the OPENAI_API_KEY is set, if not return 400
+  console.log("HII 1")
   if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === "") {
     return new Response(
       "Missing OPENAI_API_KEY – make sure to add it to your .env file.",
@@ -21,7 +22,7 @@ export async function POST(req: Request): Promise<Response> {
       },
     );
   }
-  
+  console.log("HII 2")
   if (
     process.env.NODE_ENV != "development" &&
     process.env.KV_REST_API_URL &&
@@ -36,7 +37,7 @@ export async function POST(req: Request): Promise<Response> {
     const { success, limit, reset, remaining } = await ratelimit.limit(
       `novel_ratelimit_${ip}`,
     );
-
+    console.log("HII 3")
     if (!success) {
       return new Response("You have reached your request limit for the day.", {
         status: 429,
@@ -48,7 +49,7 @@ export async function POST(req: Request): Promise<Response> {
       });
     }
   }
-
+  console.log("HII 4")
   let { prompt } = await req.json();
 
   const response = await openai.chat.completions.create({
