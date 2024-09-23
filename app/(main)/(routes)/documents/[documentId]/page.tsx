@@ -10,6 +10,8 @@ import dynamic from "next/dynamic";
 import { useMemo } from "react";
 
 
+
+
 interface DocumentIdPageProps{
     params:{
         documentId:Id<"documents">;
